@@ -1,0 +1,27 @@
+/* ─────────────────────────────────────────
+   reset.css — box model & browser defaults
+───────────────────────────────────────── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* scroller handles all scroll */
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  background: none;
+  border: none;
+  appearance: none;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
