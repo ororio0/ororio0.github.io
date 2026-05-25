@@ -21,10 +21,16 @@
 
   /* Typography */
   --font-serif: Georgia, 'Times New Roman', serif;
-  --font-mono:  'Courier New', Courier, monospace;
+  --font-display: 'Fredoka One', 'Trebuchet MS', sans-serif;
+  --font-mono:  var(--font-display);
 
   /* Transition speed for page elements */
   --transition: 0.35s ease;
+
+  /* Friend bio card colour — change this to restyle the bio panel */
+  --friend-bio-bg: #7a9e6a;
+
+  /* Rounded display font for friends slide title */
 }
 
 /* ── Fullpage scroller ───────────────────── */
@@ -62,6 +68,10 @@
   max-width: 900px;
 }
 
+.content--xwide {
+  max-width: 1060px;
+}
+
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -86,6 +96,21 @@
   color: var(--text-dark);
   margin-bottom: 1.2rem;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+/* Friends slide title — rounded display font */
+#slide-2 .title {
+  font-family: var(--font-display);
+  font-size: clamp(12px, 0.9vw, 14px);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+#slide-2 .tag {
+  font-family: var(--font-display);
+  font-size: clamp(44px, 6vw, 80px);
+  letter-spacing: 0.02em;
+  text-transform: none;
 }
 
 /* ── Subtitle / body copy ────────────────── */
@@ -380,6 +405,194 @@
   55%        { transform: scaleY(1); transform-origin: top; }
 }
 
+/* ── Friend grid ─────────────────────────── */
+.friend-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px;
+  max-width: 1040px;
+  margin: 0 auto;
+  pointer-events: all;
+}
+
+.friend-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 32px 20px 26px;
+  border: 1px solid rgba(26, 46, 61, 0.16);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.34);
+  box-shadow: 0 10px 28px rgba(60, 96, 120, 0.09);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+  pointer-events: all;
+}
+
+.friend-card:hover {
+  background: rgba(255, 255, 255, 0.62);
+  transform: translateY(-5px);
+  box-shadow: 0 22px 48px rgba(60, 96, 120, 0.18);
+}
+
+.friend-card__photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(26, 46, 61, 0.07);
+  border: 3px solid rgba(26, 46, 61, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.friend-card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.friend-card__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.friend-card__placeholder svg {
+  width: 72%;
+  height: 72%;
+}
+
+.friend-card__name {
+  font-family: var(--font-display);
+  font-size: 17px;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+/* ── Friend modal ────────────────────────── */
+.friend-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 25, 35, 0.52);
+  backdrop-filter: blur(7px);
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  pointer-events: all;
+  animation: friendFadeIn 0.2s ease both;
+}
+
+@keyframes friendFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.friend-modal {
+  position: relative;
+  width: min(860px, 100%);
+  background: #f2e8df;
+  border-radius: 20px;
+  padding: 44px 40px 40px;
+  box-shadow: 0 32px 80px rgba(10, 25, 35, 0.28);
+  animation: friendScaleIn 0.22s ease both;
+}
+
+@keyframes friendScaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.friend-modal__close {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  font-size: 18px;
+  color: var(--text-muted);
+  padding: 4px 9px;
+  border-radius: 8px;
+  line-height: 1;
+  pointer-events: all;
+  transition: background var(--transition), color var(--transition);
+}
+
+.friend-modal__close:hover {
+  background: rgba(26, 46, 61, 0.1);
+  color: var(--text-dark);
+}
+
+.friend-modal__title {
+  font-family: var(--font-mono);
+  font-size: clamp(26px, 3vw, 38px);
+  font-weight: 700;
+  color: var(--text-dark);
+  text-align: center;
+  margin-bottom: 28px;
+  letter-spacing: 0.01em;
+}
+
+.friend-modal__body {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.friend-modal__body--no-photo {
+  grid-template-columns: 1fr;
+}
+
+.friend-modal__photo {
+  aspect-ratio: 4 / 3;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 3px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 8px 28px rgba(10, 25, 35, 0.14);
+}
+
+.friend-modal__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.friend-modal__bio {
+  background: var(--friend-bio-bg);
+  border-radius: 14px;
+  padding: 28px 26px;
+  text-align: left;
+}
+
+.friend-modal__bio-heading {
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.friend-modal__bio-line {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: #fff;
+  line-height: 1.8;
+  text-align: left;
+}
+
+.friend-modal__bio-line strong {
+  font-weight: 700;
+}
+
 /* ── Mobile tweaks ───────────────────────── */
 @media (max-width: 600px) {
   .slide {
@@ -411,4 +624,30 @@
   }
 
   .dots  { right: 12px; }
+
+  .friend-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .friend-card__photo {
+    width: 100px;
+    height: 100px;
+  }
+
+  .friend-modal {
+    padding: 32px 20px 24px;
+  }
+
+  .friend-modal__body {
+    grid-template-columns: 1fr;
+  }
+
+  .friend-modal__body--no-photo {
+    grid-template-columns: 1fr;
+  }
+
+  .friend-modal__photo {
+    aspect-ratio: 16 / 9;
+  }
 }

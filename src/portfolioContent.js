@@ -12,7 +12,13 @@ export const PORTFOLIO_CONTENT = {
   life: {
     eyebrow: '',
     title: 'About me',
-    subtitle: 'Hello hello, my name is Aurore. I enjoy classes that are located up the hill, like in the Stewart or McIntyre Buildings. While most people find the climb frustrating, I actually find the walk outside very fun. It’s a very refreshing break from being static and staying seated in classrooms all day. I am also a dog lover. My favorite activity on campus is spotting and admiring dogs. Unfortunately, I don’t have a dog right now (T...T), so seeing other people’s dogs always makes my day.',
+    subtitle: `Hello hello, my name is Aurore. 
+              I am studying Software Engineering at McGill University. 
+              I have another expertise. 
+              I am on my way to become a professional dog trainer, 
+              experienced dog walker, and dedicated dog companion.
+              Got a pup who needs some guidance, a walk, or just a great playdate? 
+              Feel free to reach out — I'd love to help! 🎓🐕`,
     cta: 'Next',
     panels: [
       {
@@ -50,14 +56,97 @@ export const PORTFOLIO_CONTENT = {
     eyebrow: "I love playing with dogs. My favorite hobby is walking dogs outside ૮ • ﻌ - ა",
     title: '',
     subtitle: [
-          'Current status: Single with no dog',
-          'Expected 202? status: Single with a Shiba Inu.',
+          'My current status: Me and No dog',
+          'My expected 202? status: Me and my Shiba Inu.',
         ],
     photos: [
       '/photos/dogs/1.jpg',
       '/photos/dogs/2.jpg',
       '/photos/dogs/3.jpg',
       '/photos/dogs/4.jpg',
+    ],
+  },
+  friends: {
+    eyebrow: 'Doggies!',
+    title: '',
+    subtitle: [
+      'I love playing with dogs. My favorite hobby is walking dogs outside ૮ • ﻌ - ა',
+      'Current status: Single with no dog',
+      'Expected 202? status: Single with a Shiba Inu.',
+    ],
+    members: [
+      {
+        id: 'p1',
+        name: 'Pumpkin',
+        thumbSrc: '/photos/dogs/3.jpg',
+        detailSrc: '',
+        bio: [
+          { label: 'Name',     value: 'Pumpkin' },
+          { label: 'Species', value: 'Pomeranian' },
+          { label: 'Played with me since',    value: 'August 2023' },
+          { label: 'Fact', value: 'When I sleep, I snore a lots!' },
+        ],
+      },
+      {
+        id: 'p2',
+        name: 'Gana',
+        thumbSrc: '/photos/dogs/4.jpg',
+        detailSrc: '',
+        bio: [
+          { label: 'Name',     value: 'Gana' },
+          { label: 'Species', value: '—' },
+          { label: 'Since',    value: '—' },
+          { label: 'Fact', value: 'Aurore found me and spent 7 days with me in Tokyo' },
+        ],
+      },
+      {
+        id: 'p3',
+        name: 'MaoDou',
+        thumbSrc: '',
+        detailSrc: '',
+        bio: [
+          { label: 'Name',     value: 'Gana' },
+          { label: 'Species', value: '—' },
+          { label: 'Since',    value: '—' },
+          { label: 'Fact', value: '-' },
+        ],
+      },
+      {
+        id: 'p4',
+        name: 'Name',
+        thumbSrc: '',
+        detailSrc: '',
+        bio: [
+          { label: 'Name',     value: 'Gana' },
+          { label: 'Species', value: '—' },
+          { label: 'Since',    value: '—' },
+          { label: 'Fact', value: '-' },
+        ],
+      },
+      {
+        id: 'p5',
+        name: 'Name',
+        thumbSrc: '',
+        detailSrc: '',
+        bio: [
+          { label: 'Name',     value: 'Gana' },
+          { label: 'Species', value: '—' },
+          { label: 'Since',    value: '—' },
+          { label: 'Fact', value: '-' },
+        ],
+      },
+      {
+        id: 'p6',
+        name: 'Name',
+        thumbSrc: '',
+        detailSrc: '',
+        bio: [
+          { label: 'Name',     value: 'Gana' },
+          { label: 'Species', value: '—' },
+          { label: 'Since',    value: '—' },
+          { label: 'Fact', value: '-' },
+        ],
+      },
     ],
   },
 };

@@ -191,6 +191,94 @@ function HintReveal({ src, text, solutionCta, solutionText, isVisible }) {
   );
 }
 
+function FriendCard({ member, onClick }) {
+  const [imgFailed, setImgFailed] = useState(false);
+
+  return (
+    <button className="friend-card" type="button" onClick={() => onClick(member)}>
+      <div className="friend-card__photo">
+        {member.thumbSrc && !imgFailed ? (
+          <img
+            src={member.thumbSrc}
+            alt={member.name || 'Person'}
+            onError={() => setImgFailed(true)}
+          />
+        ) : (
+          <span className="friend-card__placeholder" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="32" cy="22" r="13" fill="rgba(26,46,61,0.18)" />
+              <ellipse cx="32" cy="54" rx="22" ry="13" fill="rgba(26,46,61,0.12)" />
+            </svg>
+          </span>
+        )}
+      </div>
+      <p className="friend-card__name">{member.name || 'Name'}</p>
+    </button>
+  );
+}
+
+function FriendModal({ member, onClose }) {
+  const [imgFailed, setImgFailed] = useState(false);
+  const showPhoto = Boolean(member.detailSrc) && !imgFailed;
+
+  useEffect(() => {
+    setImgFailed(false);
+  }, [member]);
+
+  useEffect(() => {
+    const handleKey = event => { if (event.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [onClose]);
+
+  return (
+    <div className="friend-modal-backdrop" onClick={onClose}>
+      <div className="friend-modal" onClick={event => event.stopPropagation()}>
+        <button className="friend-modal__close" type="button" onClick={onClose} aria-label="Close">✕</button>
+        <h2 className="friend-modal__title">{member.name || 'Name'}</h2>
+        <div className={`friend-modal__body${showPhoto ? '' : ' friend-modal__body--no-photo'}`}>
+          {member.detailSrc && (
+            <div className="friend-modal__photo" style={{ display: imgFailed ? 'none' : undefined }}>
+              <img
+                src={member.detailSrc}
+                alt={member.name || 'Person'}
+                onError={() => setImgFailed(true)}
+              />
+            </div>
+          )}
+          <div className="friend-modal__bio">
+            <h3 className="friend-modal__bio-heading">Bio</h3>
+            {(member.bio ?? []).map(({ label, value }) => (
+              <p key={label} className="friend-modal__bio-line">
+                <strong>{label}:</strong> {value}
+              </p>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FriendGrid({ members }) {
+  const [selected, setSelected] = useState(null);
+
+  if (!members?.length) return null;
+
+  return (
+    <>
+      <div className="friend-grid">
+        {members.map(member => (
+          <FriendCard key={member.id} member={member} onClick={setSelected} />
+        ))}
+      </div>
+      {selected && (
+        <FriendModal member={selected} onClose={() => setSelected(null)} />
+      )}
+    </>
+  );
+}
+
 function PhotoGallery({ photos }) {
   if (!photos?.length) return null;
 
@@ -211,12 +299,12 @@ function PhotoGallery({ photos }) {
   );
 }
 
-function Slide({ id, section, isHero = false }) {
+function Slide({ id, section, isHero = false, isWide = false }) {
   const [showHint, setShowHint] = useState(false);
 
   return (
     <section className="slide" id={id}>
-      <div className={`content${isHero ? ' content--wide' : ''}`}>
+      <div className={`content${isHero ? ' content--wide' : isWide ? ' content--xwide' : ''}`}>
         <p className="tag">{section.eyebrow}</p>
         {isHero ? (
           <h1 className="title">{section.title}</h1>
@@ -228,6 +316,7 @@ function Slide({ id, section, isHero = false }) {
         <ItemList items={section.items} />
         <ContactLinks links={section.links} />
         <PhotoGallery photos={section.photos} />
+        <FriendGrid members={section.members} />
         {section.cta && (
           <button
             className="btn"
@@ -260,7 +349,7 @@ function App() {
     () => [
       { key: 'hero', section: PORTFOLIO_CONTENT.hero, isHero: true },
       { key: 'life', section: PORTFOLIO_CONTENT.life },
-      { key: 'contact', section: PORTFOLIO_CONTENT.contact },
+      { key: 'friends', section: PORTFOLIO_CONTENT.friends, isWide: true },
     ],
     []
   );
@@ -276,6 +365,7 @@ function App() {
             key={slide.key}
             section={slide.section}
             isHero={slide.isHero}
+            isWide={slide.isWide}
           />
         ))}
       </main>
