@@ -1,76 +1,62 @@
 /* ─────────────────────────────────────────
-   style.css — layout, typography, UI
-   
-   To customise fonts: swap the font-family
-   values in :root and .title / .tag / .sub
-───────────────────────────────────────── */
+   style.css — Animal Island portfolio
+─────────────────────────────────────────── */
 
-/* ── Tokens ─────────────────────────────── */
+/* ── Tokens ───────────────────────────────── */
 :root {
-  /* Background colour for section 0 (cream) */
-  --bg-0: #f2e8df;
-  /* Background colour for section 1 (warm taupe) */
-  --bg-1: #ede4d8;
-  /* Background colour for section 2 (sage) */
-  --bg-2: #d8e4dc;
-
-  /* Text */
   --text-dark:   #1a2e3d;
   --text-muted:  #3a5a72;
   --text-subtle: #6a8fa8;
 
-  /* Typography */
-  --font-serif: Georgia, 'Times New Roman', serif;
-  --font-display: 'Fredoka One', 'Trebuchet MS', sans-serif;
-  --font-mono:  var(--font-display);
+  --font-display: 'Baloo 2', sans-serif;
+  --font-mono:    var(--font-display);
 
-  /* Transition speed for page elements */
   --transition: 0.35s ease;
 
-  /* Friend bio card colour — change this to restyle the bio panel */
   --friend-bio-bg: #7a9e6a;
-
-  /* Rounded display font for friends slide title */
 }
 
-/* ── Fullpage scroller ───────────────────── */
+/* ── Scroller ────────────────────────────── */
 #scroller {
   position: fixed;
   inset: 0;
   overflow-y: scroll;
-  scroll-snap-type: y mandatory;
-  scrollbar-width: none;       /* Firefox */
+  scrollbar-width: none;
   z-index: 10;
-  background: linear-gradient(180deg, #ddeef8 0%, #e8f2f8 52%, #cfe6f0 100%);
+  background: linear-gradient(160deg, #e0efe8 0%, #f5ede3 38%, #ddeef8 72%, #f0ebe2 100%);
 }
-#scroller::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+#scroller::-webkit-scrollbar { display: none; }
 
-/* ── Individual slides ───────────────────── */
+/* ── Sections ────────────────────────────── */
 .slide {
-  height: 100vh;
-  scroll-snap-align: start;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   position: relative;
+  overflow: hidden;
+  padding: 2.5rem 2rem;
+}
+
+/* Soft centered glow per slide */
+.slide::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 55% 55% at 50% 50%, rgba(255,255,255,0.22) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 /* ── Content block ───────────────────────── */
 .content {
   text-align: center;
-  padding: 2rem;
-  max-width: 680px;
-  pointer-events: none; /* let scroll events pass through */
+  padding: 0 1rem;
+  width: min(680px, calc(100% - 2rem));
+  pointer-events: none;
   animation: fadeUp 0.9s ease both;
 }
 
-.content--wide {
-  max-width: 900px;
-}
-
-.content--xwide {
-  max-width: 1060px;
-}
+.content--wide  { width: min(900px,  calc(100% - 2rem)); }
+.content--xwide { width: min(1060px, calc(100% - 2rem)); }
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); }
@@ -80,132 +66,104 @@
 /* ── Eyebrow tag ─────────────────────────── */
 .tag {
   font-family: var(--font-mono);
-  font-size: clamp(12px, 0.9vw, 14px);
+  font-size: clamp(11px, 0.85vw, 13px);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-subtle);
-  margin-bottom: 1.15rem;
+  margin-bottom: 0.4rem;
 }
 
 /* ── Section title ───────────────────────── */
 .title {
   font-family: var(--font-mono);
-  font-size: clamp(34px, 4.5vw, 58px);
+  font-size: clamp(30px, 3.8vw, 50px);
   font-weight: 400;
-  line-height: 1.08;
+  line-height: 1.1;
   color: var(--text-dark);
-  margin-bottom: 1.2rem;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+  margin-bottom: 0.5rem;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
-/* Friends slide title — rounded display font */
+/* ── Hero title — smaller to fit one line ── */
+#slide-0 .title {
+  font-size: clamp(14px, 2.6vw, 32px);
+  white-space: nowrap;
+}
+
+/* ── About me bio — justified ────────────── */
+#slide-1 .sub {
+  text-align: justify;
+}
+
+/* ── Friends slide (#slide-2): "Doggies!" as big display eyebrow ── */
 #slide-2 .title {
   font-family: var(--font-display);
   font-size: clamp(12px, 0.9vw, 14px);
   font-weight: 400;
   letter-spacing: 0.02em;
+  margin-bottom: 0.4rem;
 }
-
 #slide-2 .tag {
   font-family: var(--font-display);
   font-size: clamp(44px, 6vw, 80px);
   letter-spacing: 0.02em;
   text-transform: none;
+  color: var(--text-dark);
+  margin-bottom: 0.4rem;
 }
 
 /* ── Subtitle / body copy ────────────────── */
 .sub {
   font-family: var(--font-mono);
-  font-size: clamp(15px, 1.1vw, 18px);
-  line-height: 1.58;
+  font-size: clamp(13px, 1vw, 16px);
+  line-height: 1.62;
   color: var(--text-muted);
-  margin-bottom: 2rem;
-  letter-spacing: 0.03em;
+  margin-bottom: 0.85rem;
+  letter-spacing: 0.02em;
+}
+.sub p + p { margin-top: 4px; }
+
+/* ── Profile tabs wrapper ────────────────── */
+.profile-tabs-wrapper {
+  max-width: 600px;
+  margin: 0 auto 1.25rem;
+  pointer-events: all;
+  text-align: left;
 }
 
-.sub p + p {
-  margin-top: 4px;
-}
-
+/* ── Profile panels grid ─────────────────── */
 .profile-panels {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 14px;
-  margin: 0 auto 2rem;
-  max-width: 620px;
+  gap: 12px;
+  max-width: 600px;
+  margin: 0 auto 1.25rem;
   pointer-events: all;
 }
 
-.profile-tabs {
-  display: inline-flex;
-  gap: 6px;
-  margin: 0 auto 1rem;
-  padding: 5px;
-  border: 1px solid rgba(26, 46, 61, 0.14);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.24);
-  pointer-events: all;
-}
-
-.profile-tab {
-  min-width: 110px;
-  padding: 9px 16px;
-  border-radius: 999px;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  letter-spacing: 0.02em;
-  color: var(--text-muted);
-  transition: background var(--transition), color var(--transition);
-}
-
-.profile-tab.is-active {
-  color: var(--text-dark);
-  background: rgba(255, 255, 255, 0.7);
-}
-
-.profile-card {
-  min-height: 178px;
-  padding: 22px;
-  text-align: left;
-  border: 1px solid rgba(26, 46, 61, 0.16);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.34);
-  box-shadow: 0 18px 46px rgba(60, 96, 120, 0.12);
-  backdrop-filter: blur(10px);
-}
-
-.profile-card__type {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-subtle);
-  margin-bottom: 12px;
-}
-
-.profile-card__title {
-  font-family: var(--font-mono);
-  font-size: clamp(22px, 1.8vw, 28px);
-  line-height: 1.12;
-  font-weight: 400;
-  color: var(--text-dark);
-}
-
+/* ── Profile card content ────────────────── */
 .profile-card__heading {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
-  margin-bottom: 8px;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.profile-card__title {
+  font-family: var(--font-mono);
+  font-size: clamp(17px, 1.4vw, 21px);
+  line-height: 1.15;
+  font-weight: 400;
+  color: var(--text-dark);
 }
 
 .profile-card__logo {
   flex: 0 0 auto;
-  width: 54px;
-  height: 54px;
+  width: 42px;
+  height: 42px;
   overflow: hidden;
 }
-
 .profile-card__logo img {
   width: 100%;
   height: 100%;
@@ -217,70 +175,50 @@
   font-family: var(--font-mono);
   color: var(--text-muted);
 }
-
 .profile-card__meta {
-  font-size: 14px;
-  line-height: 1.45;
-  margin-bottom: 10px;
-}
-
-.profile-card__details {
   font-size: 13px;
-  line-height: 1.58;
+  line-height: 1.4;
+  margin-bottom: 7px;
 }
-
-.profile-card__details p + p {
-  margin-top: 6px;
+.profile-card__details {
+  font-size: 12px;
+  line-height: 1.55;
 }
+.profile-card__details p + p { margin-top: 4px; }
 
+/* ── Item list / contact links ───────────── */
 .item-list,
 .contact-links {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
-  margin: 0 auto 2rem;
-  max-width: 620px;
+  margin: 0 auto 1.25rem;
+  max-width: 600px;
   pointer-events: all;
 }
 
-.item-pill,
-.contact-link {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  line-height: 1.3;
-  letter-spacing: 0.02em;
-  color: var(--text-muted);
-  border: 1px solid rgba(26, 46, 61, 0.16);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.28);
-  padding: 10px 14px;
+/* ── Hint modal ──────────────────────────── */
+.hint-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
 }
 
-.contact-link {
-  color: var(--text-dark);
-  text-decoration: none;
-  transition: background var(--transition), border-color var(--transition);
-}
-
-.contact-link:hover {
-  background: rgba(255, 255, 255, 0.46);
-  border-color: rgba(26, 46, 61, 0.38);
-}
-
-.hint-reveal {
-  margin-top: 1.25rem;
-}
+/* ── Hint reveal ─────────────────────────── */
+.hint-reveal { margin-top: 0.9rem; }
 
 .hint-gif {
-  width: min(220px, 64vw);
+  width: min(200px, 60vw);
   aspect-ratio: 4 / 3;
-  margin: 0 auto 0.9rem;
+  margin: 0 auto 0.75rem;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 12px;
   pointer-events: all;
 }
-
 .hint-gif img {
   width: 100%;
   height: 100%;
@@ -289,26 +227,28 @@
 
 .hint-text {
   font-family: var(--font-mono);
-  font-size: 14px;
-  line-height: 1.45;
+  font-size: 15px;
+  line-height: 1.5;
   color: var(--text-muted);
-  margin-bottom: 1rem;
+  text-align: center;
+  margin: 0;
 }
 
 .solution-text {
   font-family: var(--font-mono);
   font-size: 15px;
-  line-height: 1.45;
+  line-height: 1.5;
   color: var(--text-dark);
-  margin-top: 1rem;
-  transform: rotate(180deg);
+  text-align: center;
+  margin: 0;
 }
 
+/* ── Photo gallery ───────────────────────── */
 .photo-gallery {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-  max-width: 780px;
+  gap: 10px;
+  max-width: 680px;
   margin: 0 auto;
   pointer-events: all;
 }
@@ -316,39 +256,29 @@
 .photo-slot {
   aspect-ratio: 3 / 4;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(60, 96, 80, 0.14);
 }
-
 .photo-slot img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* ── CTA button ──────────────────────────── */
-.btn {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-dark);
-  border: 1.5px solid rgba(26, 46, 61, 0.45);
-  background: rgba(220, 238, 248, 0.45);
-  padding: 13px 30px;
-  border-radius: 999px;
+/* ── Enable pointer events on interactive children ── */
+.hint-reveal button,
+.content button {
   pointer-events: all;
-  backdrop-filter: blur(4px);
-  transition: background var(--transition), border-color var(--transition);
-}
-.btn:hover {
-  background: rgba(220, 238, 248, 0.82);
-  border-color: rgba(26, 46, 61, 0.9);
 }
 
-.btn--secondary {
-  padding: 11px 24px;
-  font-size: 12px;
-  background: rgba(255, 255, 255, 0.34);
+/* ── Footer — pinned to bottom of slide ─────── */
+/* Animal Island Footer renders a plain div (no <footer> tag), so target it structurally */
+#slide-2 > div:last-child {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
 }
 
 /* ── Dot navigation ──────────────────────── */
@@ -369,87 +299,40 @@
   border-radius: 50%;
   background: rgba(26, 46, 61, 0.2);
   transition: background 0.3s, transform 0.3s;
+  border: none;
+  cursor: pointer;
+  padding: 0;
 }
 .dot.on {
   background: rgba(26, 46, 61, 0.75);
   transform: scale(1.5);
 }
 
-/* ── Scroll hint (first slide only) ─────── */
-.scroll-hint {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  pointer-events: none;
-}
-.scroll-hint span {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(26, 46, 61, 0.35);
-}
-.scroll-line {
-  width: 1px;
-  height: 24px;
-  background: rgba(26, 46, 61, 0.2);
-  animation: drip 2.2s ease-in-out infinite;
-}
-@keyframes drip {
-  0%,  100% { transform: scaleY(0); transform-origin: top; }
-  55%        { transform: scaleY(1); transform-origin: top; }
-}
+/* ── Scroll hint — hidden (page now flows continuously) ── */
+.scroll-hint { display: none; }
 
 /* ── Friend grid ─────────────────────────── */
 .friend-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 22px;
+  gap: 18px;
   max-width: 1040px;
   margin: 0 auto;
   pointer-events: all;
 }
 
-.friend-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  padding: 32px 20px 26px;
-  border: 1px solid rgba(26, 46, 61, 0.16);
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.34);
-  box-shadow: 0 10px 28px rgba(60, 96, 120, 0.09);
-  backdrop-filter: blur(10px);
-  cursor: pointer;
-  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
-  pointer-events: all;
-}
-
-.friend-card:hover {
-  background: rgba(255, 255, 255, 0.62);
-  transform: translateY(-5px);
-  box-shadow: 0 22px 48px rgba(60, 96, 120, 0.18);
-}
-
 .friend-card__photo {
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   overflow: hidden;
-  background: rgba(26, 46, 61, 0.07);
-  border: 3px solid rgba(26, 46, 61, 0.1);
+  background: rgba(255, 255, 255, 0.28);
+  border: 3px solid rgba(255, 255, 255, 0.55);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
-
 .friend-card__photo img {
   width: 100%;
   height: 100%;
@@ -463,7 +346,6 @@
   align-items: center;
   justify-content: center;
 }
-
 .friend-card__placeholder svg {
   width: 72%;
   height: 72%;
@@ -471,81 +353,18 @@
 
 .friend-card__name {
   font-family: var(--font-display);
-  font-size: 17px;
-  color: var(--text-muted);
+  font-size: 16px;
+  color: #fff;
   letter-spacing: 0.02em;
 }
 
-/* ── Friend modal ────────────────────────── */
-.friend-modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(10, 25, 35, 0.52);
-  backdrop-filter: blur(7px);
-  z-index: 30;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  pointer-events: all;
-  animation: friendFadeIn 0.2s ease both;
-}
-
-@keyframes friendFadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-.friend-modal {
-  position: relative;
-  width: min(860px, 100%);
-  background: #f2e8df;
-  border-radius: 20px;
-  padding: 44px 40px 40px;
-  box-shadow: 0 32px 80px rgba(10, 25, 35, 0.28);
-  animation: friendScaleIn 0.22s ease both;
-}
-
-@keyframes friendScaleIn {
-  from { opacity: 0; transform: scale(0.92); }
-  to   { opacity: 1; transform: scale(1); }
-}
-
-.friend-modal__close {
-  position: absolute;
-  top: 16px;
-  right: 18px;
-  font-size: 18px;
-  color: var(--text-muted);
-  padding: 4px 9px;
-  border-radius: 8px;
-  line-height: 1;
-  pointer-events: all;
-  transition: background var(--transition), color var(--transition);
-}
-
-.friend-modal__close:hover {
-  background: rgba(26, 46, 61, 0.1);
-  color: var(--text-dark);
-}
-
-.friend-modal__title {
-  font-family: var(--font-mono);
-  font-size: clamp(26px, 3vw, 38px);
-  font-weight: 700;
-  color: var(--text-dark);
-  text-align: center;
-  margin-bottom: 28px;
-  letter-spacing: 0.01em;
-}
-
+/* ── Friend modal content ────────────────── */
 .friend-modal__body {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
-  gap: 28px;
+  gap: 24px;
   align-items: start;
 }
-
 .friend-modal__body--no-photo {
   grid-template-columns: 1fr;
 }
@@ -557,7 +376,6 @@
   border: 3px solid rgba(255, 255, 255, 0.7);
   box-shadow: 0 8px 28px rgba(10, 25, 35, 0.14);
 }
-
 .friend-modal__photo img {
   width: 100%;
   height: 100%;
@@ -568,82 +386,57 @@
 .friend-modal__bio {
   background: var(--friend-bio-bg);
   border-radius: 14px;
-  padding: 28px 26px;
+  padding: 22px 20px;
   text-align: left;
 }
-
 .friend-modal__bio-heading {
   font-family: var(--font-mono);
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
   color: #fff;
-  margin-bottom: 16px;
-  text-align: left;
+  margin-bottom: 12px;
 }
-
 .friend-modal__bio-line {
   font-family: var(--font-mono);
-  font-size: 15px;
+  font-size: 14px;
   color: #fff;
-  line-height: 1.8;
-  text-align: left;
+  line-height: 1.75;
 }
+.friend-modal__bio-line strong { font-weight: 700; }
 
-.friend-modal__bio-line strong {
-  font-weight: 700;
-}
-
-/* ── Mobile tweaks ───────────────────────── */
+/* ── Mobile ───────────────────────────────── */
 @media (max-width: 600px) {
   .slide {
-    min-height: 100vh;
-    height: auto;
-    padding: 76px 0;
+    padding: 2rem 0;
   }
 
   .content {
-    padding: 1.25rem;
+    padding: 0 1rem;
   }
 
-  .title {
-    font-size: 34px;
-  }
+  .title { font-size: 28px; }
 
   .profile-panels {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .profile-card {
-    min-height: 0;
-    padding: 18px;
+    gap: 8px;
   }
 
   .photo-gallery {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .dots  { right: 12px; }
+  .dots { right: 12px; }
 
   .friend-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
+    gap: 12px;
   }
 
   .friend-card__photo {
-    width: 100px;
-    height: 100px;
-  }
-
-  .friend-modal {
-    padding: 32px 20px 24px;
+    width: 90px;
+    height: 90px;
   }
 
   .friend-modal__body {
-    grid-template-columns: 1fr;
-  }
-
-  .friend-modal__body--no-photo {
     grid-template-columns: 1fr;
   }
 
